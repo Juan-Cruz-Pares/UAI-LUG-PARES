@@ -7,9 +7,9 @@ const promiseResolver = async () => {
     try{
         const resultado = await miPromise
         console.log("Resultado: ", resultado)
-    }catch(error) {
+    }catch(error) { 
         console.log("Error: ", error)
     }
 }
 
-promiseResolver()
+promiseResolver() 

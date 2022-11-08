@@ -36,5 +36,5 @@ async function connectToDb() {
   } else {
     // en caso que la var no se haya cargado correctamente, loguea un mensaje en la consola.
     console.log("Connection string is missing");
-  }
+  } 
 }
