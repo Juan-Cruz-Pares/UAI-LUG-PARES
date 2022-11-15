@@ -1,4 +1,13 @@
-import { Schema, model } from "mongoose";
+import { Schema, model, Document } from "mongoose";
+import {IProvider} from './provider';
+
+export interface IProduct extends Document {
+  name: String;
+  description: String;
+  stock: Number;
+  price: Number;
+  idProvider: IProvider
+}
 
 // declaro la estructura que va a tener mi esquema/documento/tabla.
 const productSchema = new Schema({

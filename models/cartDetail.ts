@@ -1,4 +1,13 @@
-import { Schema, model } from "mongoose";
+import { Schema, model, Document } from "mongoose";
+import { ICart } from "./cart";
+import { IProduct } from "./product";
+
+export interface IDetail extends Document {
+    price: number;
+    amount: number;
+    idCart:ICart;
+    idProduct: IProduct;
+}
 
 // declaro la estructura que va a tener mi esquema/documento/tabla.
 const detailSchema = new Schema({
@@ -15,4 +24,4 @@ const detailSchema = new Schema({
 });
 
 // exporto mi modelo, el cual me permite acceder a los metodos de la bd.
-export default model("CatDetail", detailSchema); 
+export default model<IDetail>("CatDetail", detailSchema); 

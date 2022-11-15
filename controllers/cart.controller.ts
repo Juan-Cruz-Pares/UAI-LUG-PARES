@@ -1,19 +1,20 @@
 const { response, request } = require("express");
 import Detail from "../models/cartDetail";
-import Cart from "../models/cart";
+import {IDetail} from "../models/cartDetail";
+import { ICart } from "../models/cart";
 
-const calcularMontoTotal = async (idCart: Number)=>{
-    const details = await Detail.find({ idCart: idCart}).exec();
+const calcularMontoTotal = async (cart: ICart)=>{
+    const details = await Detail.find({ idCart: cart._id}).exec();
     if(details.length > 0){
-        var total = 0;
-        details.forEach((item)=>{
+        var total: number = 0 ;
+        details.forEach((item : IDetail)=>{
             total += (item.price  * item.amount);
         });
-        const cart = await Cart.findOne();
+        
         cart.totalPrice = total;
         cart.save();
     }
-    
+
 }
 
 export default {

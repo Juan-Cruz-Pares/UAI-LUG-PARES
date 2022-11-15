@@ -1,4 +1,10 @@
-const { model, Schema } = require("mongoose");
+import { model, Schema, Document } from 'mongoose';
+
+export interface IProvider extends Document {
+  name: String;
+  email: String;
+  phone: String;
+}
 
 const providerSchema = new Schema({
   name: { type: String, required: true, unique: true },
@@ -6,4 +12,4 @@ const providerSchema = new Schema({
   phone: { type: String, required: true },
 });
 
-export default model("Provider", providerSchema);
+export default model<IProvider>("Provider", providerSchema);

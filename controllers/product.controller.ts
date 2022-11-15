@@ -3,7 +3,7 @@ import Product from "../models/product";
 
 const productsGet = async (req = request, res = response) => {
     const products = await Product.find();
-    if (products) {
+    if (products.length) {
         res.status("200").json({ products })
     } else {
         res.status("200").json({ msg: "There are no products" });
@@ -17,7 +17,7 @@ const productsPost = async (req = request, res = response) => {
     if (!p || p.length === 0) {
         const product = new Product({ name, description, stock, price, idProvider });
         if (product) {
-            res.status("200").json({ msg: `Product ${name} was added` });
+            res.status("200").json({ msg: `Product ${product._id} was added` });
             await product.save();
         }
     } else {

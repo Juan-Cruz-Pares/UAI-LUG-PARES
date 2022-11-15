@@ -1,11 +1,12 @@
 const { response, request } = require("express");
 import Detail from "../models/cartDetail";
 import Cart from "../models/cart";
+import {ICart} from "../models/cart";
 import CartController from "./cart.controller";
 
 const detailPost = async (req = request, res = response) => {
     const listCart = await Cart.find();
-    var cart = {_id:0};
+    var cart :ICart;
     if(listCart.length > 0 ){
         cart = listCart[0];
     }else{
@@ -28,13 +29,15 @@ const detailPost = async (req = request, res = response) => {
         res.json({ msg: `Product ${idProduct} was added` });
         await detail.save();        
     }
-    CartController.calcularMontoTotal(cart._id);
+    CartController.calcularMontoTotal(cart);
 };
 
-
 const detailDelete = async (req = request, res = response) => {
+    if(!req.body.amount && !req.body.idProduct)
+        res.status("400").json({ msg: 'Incorrect parameters' });
+
     const listCart = await Cart.find();
-    var cart = {_id:0};
+    var cart :ICart;
     if(listCart.length > 0 ){
         cart = listCart[0];
     }else{
@@ -55,12 +58,11 @@ const detailDelete = async (req = request, res = response) => {
             detail.amount -= parseInt(amount);
             res.status("200").json({ msg: `Quantity of product ${idProduct} was eliminated` });
             await detail.save();
-            CartController.calcularMontoTotal(cart._id);
+            CartController.calcularMontoTotal(cart);
         }
     }else{
         res.status("400").json({ msg: `idProduct ` });
     }
-
 };
 
 module.exports = {
